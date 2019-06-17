@@ -1,0 +1,16 @@
+<resources>
+    <string name="app_name">GRAPHIAN</string>
+
+    <string name="geuDesc">VISIT GEU WEBSITE</string>
+
+    <string name="gehuDesc">VISIT GEHU WEBSITE</string>
+
+    <string name="corner">STUDENT CORNER</string>
+
+    <string name="erpDescGeu">VISIT ERP GEU</string>
+    <string name="erpDescGehu">VISIT ERP GEHU</string>
+
+    <string name="chat">GRAPHIAN</string>
+    <string name="chatDesc">CONNECT WITH OTHER GRAPHIANS</string>
+
+</resources>
