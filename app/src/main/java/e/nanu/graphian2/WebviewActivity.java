@@ -52,7 +52,7 @@ public class WebviewActivity extends AppCompatActivity {
             public void onPageFinished(WebView view, String url) {
                 super.onPageFinished(view, url);
                 Toast.makeText(getApplicationContext(),"Page Loaded",Toast.LENGTH_SHORT).show();
-                Pbar.setVisibility(View.GONE);
+               // Pbar.setVisibility(View.GONE);
                 myWebView.setVisibility(View.VISIBLE);
             }
         });
