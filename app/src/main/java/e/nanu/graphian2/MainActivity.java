@@ -6,12 +6,27 @@ import android.os.Bundle;
 import android.view.View;
 import android.widget.Toast;
 
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
+
 public class MainActivity extends AppCompatActivity {
+
+    private FirebaseAuth mAuth;
+    private FirebaseUser currentUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        mAuth=FirebaseAuth.getInstance();
+    }
+
+    @Override
+    public void onStart() {
+        super.onStart();
+        // Check if user is signed in (non-null) and update UI accordingly.
+        currentUser = mAuth.getCurrentUser();
+       // updateUI(currentUser);
     }
 
     public void visitGeu(View v)
@@ -53,5 +68,16 @@ public class MainActivity extends AppCompatActivity {
     public void startChat(View v)
     {
 
+        if(currentUser == null){
+
+            //sendToStart();
+            Intent intent=new Intent(MainActivity.this,StartActivity.class);
+
+        } else {
+
+            //mUserRef.child("online").setValue("true");
+            Intent intent=new Intent(MainActivity.this,MainActivity.class);
+
+        }
     }
 }
