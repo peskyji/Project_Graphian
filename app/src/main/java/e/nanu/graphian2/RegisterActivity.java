@@ -1,11 +1,12 @@
 package e.nanu.graphian2;
 
+
 import android.app.ProgressDialog;
 import android.content.Intent;
+import android.os.Bundle;
 import android.support.annotation.NonNull;
 import android.support.design.widget.TextInputLayout;
 import android.support.v7.app.AppCompatActivity;
-import android.os.Bundle;
 import android.support.v7.widget.Toolbar;
 import android.text.TextUtils;
 import android.view.View;
@@ -55,7 +56,6 @@ public class RegisterActivity extends AppCompatActivity {
         mRegProgress = new ProgressDialog(this);
 
 
-
         // Firebase Auth
 
         mAuth = FirebaseAuth.getInstance();
@@ -77,7 +77,7 @@ public class RegisterActivity extends AppCompatActivity {
                 String email = mEmail.getEditText().getText().toString();
                 String password = mPassword.getEditText().getText().toString();
 
-                if(!TextUtils.isEmpty(display_name) || !TextUtils.isEmpty(email) || !TextUtils.isEmpty(password)){
+                if (!TextUtils.isEmpty(display_name) || !TextUtils.isEmpty(email) || !TextUtils.isEmpty(password)) {
 
                     mRegProgress.setTitle("Registering User");
                     mRegProgress.setMessage("Please wait while we create your account !");
@@ -89,7 +89,6 @@ public class RegisterActivity extends AppCompatActivity {
                 }
 
 
-
             }
         });
 
@@ -98,48 +97,11 @@ public class RegisterActivity extends AppCompatActivity {
 
     private void register_user(final String display_name, String email, String password) {
 
-        mAuth.createUserWithEmailAndPassword(email, password)
-                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            // Sign in success, update UI with the signed-in user's information
-                           // Log.d(TAG, "createUserWithEmail:success");
-                            FirebaseUser user = mAuth.getCurrentUser();
-
-                            Toast.makeText(getApplicationContext(), "you are registered "+user,
-                                    Toast.LENGTH_SHORT).show();
-                           // updateUI(user);
-
-                        } else {
-                            // If sign in fails, display a message to the user.
-                          //  Log.w(TAG, "createUserWithEmail:failure", task.getException());
-                            Toast.makeText(getApplicationContext(), "Authentication failed.",
-                                    Toast.LENGTH_SHORT).show();
-                           // updateUI(null);
-                        }
-
-                        // ...
-                    }
-                });
-
-
-
-
-
-
-
-
-
-
-
-
-
-       /* mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+        /*mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
             public void onComplete(@NonNull Task<AuthResult> task) {
 
-                if(task.isSuccessful()){
+                if (task.isSuccessful()) {
 
 
                     FirebaseUser current_user = FirebaseAuth.getInstance().getCurrentUser();
@@ -160,7 +122,7 @@ public class RegisterActivity extends AppCompatActivity {
                         @Override
                         public void onComplete(@NonNull Task<Void> task) {
 
-                            if(task.isSuccessful()){
+                            if (task.isSuccessful()) {
 
                                 mRegProgress.dismiss();
 
@@ -183,7 +145,31 @@ public class RegisterActivity extends AppCompatActivity {
                 }
 
             }
-        });  */
+        });*/
+
+
+        mAuth.createUserWithEmailAndPassword(email, password)
+                .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                    @Override
+                    public void onComplete(@NonNull Task<AuthResult> task) {
+                        if (task.isSuccessful()) {
+                            // Sign in success, update UI with the signed-in user's information
+                           // Log.d(TAG, "createUserWithEmail:success");
+                            FirebaseUser user = mAuth.getCurrentUser();
+                            Toast.makeText(getApplicationContext(), user+": you are registered",
+                                    Toast.LENGTH_SHORT).show();
+                           // updateUI(user);
+                        } else {
+                            // If sign in fails, display a message to the user.
+                           // Log.w(TAG, "createUserWithEmail:failure", task.getException());
+                            Toast.makeText(getApplicationContext(), "Authentication failed.",
+                                    Toast.LENGTH_SHORT).show();
+                          //  updateUI(null);
+                        }
+
+                        // ...
+                    }
+                });
 
     }
 }

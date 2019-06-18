@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
         } else {
 
             //mUserRef.child("online").setValue("true");
-            Toast.makeText(getApplicationContext(),"still main  activity",Toast.LENGTH_LONG).show();
+            Toast.makeText(getApplicationContext(),"welcome"+currentUser.getDisplayName(),Toast.LENGTH_LONG).show();
             Intent intent=new Intent(MainActivity.this,MainActivity.class);
             startActivity(intent);
         }
