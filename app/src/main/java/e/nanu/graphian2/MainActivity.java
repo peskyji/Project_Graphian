@@ -79,7 +79,7 @@ public class MainActivity extends AppCompatActivity {
 
             //mUserRef.child("online").setValue("true");
             Toast.makeText(getApplicationContext(),"welcome"+currentUser.getDisplayName(),Toast.LENGTH_LONG).show();
-            Intent intent=new Intent(MainActivity.this,MainActivity.class);
+            Intent intent=new Intent(MainActivity.this,ChatHomeActivity.class);
             startActivity(intent);
         }
     }

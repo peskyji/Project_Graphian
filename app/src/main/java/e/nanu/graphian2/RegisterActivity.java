@@ -81,6 +81,7 @@ public class RegisterActivity extends AppCompatActivity {
 
                     mRegProgress.setTitle("Registering User");
                     mRegProgress.setMessage("Please wait while we create your account !");
+
                     mRegProgress.setCanceledOnTouchOutside(false);
                     mRegProgress.show();
 
@@ -159,6 +160,13 @@ public class RegisterActivity extends AppCompatActivity {
                             Toast.makeText(getApplicationContext(), user+": you are registered",
                                     Toast.LENGTH_SHORT).show();
                            // updateUI(user);
+
+                            mRegProgress.dismiss();
+
+                            Intent mainIntent = new Intent(RegisterActivity.this, ChatHomeActivity.class);
+                           // mainIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                            startActivity(mainIntent);
+                            finish();
                         } else {
                             // If sign in fails, display a message to the user.
                            // Log.w(TAG, "createUserWithEmail:failure", task.getException());
