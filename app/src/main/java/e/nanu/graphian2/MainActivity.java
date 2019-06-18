@@ -71,13 +71,16 @@ public class MainActivity extends AppCompatActivity {
         if(currentUser == null){
 
             //sendToStart();
+            Toast.makeText(getApplicationContext(),"start activity",Toast.LENGTH_LONG).show();
             Intent intent=new Intent(MainActivity.this,StartActivity.class);
+            startActivity(intent);
 
         } else {
 
             //mUserRef.child("online").setValue("true");
+            Toast.makeText(getApplicationContext(),"still main  activity",Toast.LENGTH_LONG).show();
             Intent intent=new Intent(MainActivity.this,MainActivity.class);
-
+            startActivity(intent);
         }
     }
 }

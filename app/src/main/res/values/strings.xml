@@ -13,4 +13,16 @@
     <string name="chat">GRAPHIAN</string>
     <string name="chatDesc">CONNECT WITH OTHER GRAPHIANS</string>
 
+    <string name="loginMsg">ALREADY HAVE ACCOUNT</string>
+    <string name="registerMsg">need a new account</string>
+
+    <string name="display_name">Display Name</string>
+    <string name="email">Email</string>
+    <string name="password">Password</string>
+    <string name="create_account">CREATE ACCOUNT</string>
+    <string name="log_out">Log Out</string>
+
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="default_status">Hi there, I\'m using Lapit Chat App</string>
 </resources>

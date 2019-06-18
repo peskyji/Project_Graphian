@@ -212,6 +212,7 @@
                         android:layout_height="140dp"
                         android:background="@color/white"
                         android:src="@drawable/chat"
+                        android:onClick="startChat"
                         android:padding="10dp"/>
 
                     <View

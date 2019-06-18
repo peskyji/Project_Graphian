@@ -30,7 +30,7 @@
         android:backgroundTint="@android:color/white"
         android:paddingLeft="25dp"
         android:paddingRight="25dp"
-        android:text="need_a_new_account"
+        android:text="@string/registerMsg"
         android:textColor="@color/colorPrimary" />
 
     <Button
@@ -43,6 +43,6 @@
         android:backgroundTint="@color/colorAccent"
         android:paddingLeft="20dp"
         android:paddingRight="20dp"
-        android:text="ALREADY HAVE ACCOUNT"
+        android:text="@string/loginMsg"
         android:textColor="@android:color/white" />
 </RelativeLayout>
