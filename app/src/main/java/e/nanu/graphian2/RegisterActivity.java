@@ -154,20 +154,50 @@ public class RegisterActivity extends AppCompatActivity {
                     @Override
                     public void onComplete(@NonNull Task<AuthResult> task) {
                         if (task.isSuccessful()) {
+
+
                             // Sign in success, update UI with the signed-in user's information
-                           // Log.d(TAG, "createUserWithEmail:success");
                             FirebaseUser user = mAuth.getCurrentUser();
+                            String uid=user.getUid();
+
+
+                            // the line below will point to the root database ( in firebase ) of our application like (root -> users -> uid)
+                            mDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(uid);
+
+                            // to add complex data or more than 1 fields we use hash map
+                            HashMap<String, String> userMap = new HashMap<>();
+                            userMap.put("name", display_name);
+                            userMap.put("status", "Hi there I'm using Graphian");
+                            userMap.put("image", "default");
+                            userMap.put("thumb_image", "default");
+                          //  userMap.put("device_token", device_token);
+                            mDatabase.setValue(userMap).addOnCompleteListener(new OnCompleteListener<Void>() {
+                                @Override
+                                public void onComplete(@NonNull Task<Void> task) {
+
+                                    if (task.isSuccessful()) {
+
+                                        mRegProgress.dismiss();
+
+                                        Intent mainIntent = new Intent(RegisterActivity.this, ChatHomeActivity.class);
+                                        //mainIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                        startActivity(mainIntent);
+                                        finish();
+
+                                    }
+
+                                }
+                            });
+
+
+
                             Toast.makeText(getApplicationContext(), user+": you are registered",
                                     Toast.LENGTH_SHORT).show();
                            // updateUI(user);
 
-                            mRegProgress.dismiss();
+                        }
 
-                            Intent mainIntent = new Intent(RegisterActivity.this, ChatHomeActivity.class);
-                           // mainIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                            startActivity(mainIntent);
-                            finish();
-                        } else {
+                        else {
                             mRegProgress.hide();
                             // If sign in fails, display a message to the user.
                            // Log.w(TAG, "createUserWithEmail:failure", task.getException());

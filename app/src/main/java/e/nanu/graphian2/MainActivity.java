@@ -40,7 +40,7 @@ public class MainActivity extends AppCompatActivity {
 
     public void visitGehuDdn(View v)
     {
-        Toast.makeText(getApplicationContext(),"Visiting GEHU Dehradun Official WebSite",Toast.LENGTH_LONG).show();
+        Toast.makeText(getApplicationContext(),"Visiting GEHU Official WebSite",Toast.LENGTH_LONG).show();
         String url="https://www.gehu.ac.in/content/gehu/en.html";
         Intent intent=new Intent(MainActivity.this,WebviewActivity.class);
         intent.putExtra("visiturl",url);
