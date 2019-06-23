@@ -114,13 +114,13 @@ public class ChatHomeActivity extends AppCompatActivity {
 
         }
 
-        /*
+
         if(item.getItemId() == R.id.main_all_btn){
 
-            Intent settingsIntent = new Intent(MainActivity.this, UsersActivity.class);
+            Intent settingsIntent = new Intent(ChatHomeActivity.this, UsersActivity.class);
             startActivity(settingsIntent);
 
-        }*/
+        }
 
         return true;
     }
