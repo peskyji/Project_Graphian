@@ -87,6 +87,8 @@ public class SettingsActivity extends AppCompatActivity {
 
 
         mUserDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(current_uid);
+
+        // this line is for offline support to load data even when not connected to the internet
         mUserDatabase.keepSynced(true);
 
         mUserDatabase.addValueEventListener(new ValueEventListener() {
@@ -95,43 +97,36 @@ public class SettingsActivity extends AppCompatActivity {
 
                 // retrieving data from firebase database
                 String name = dataSnapshot.child("name").getValue().toString();
+
+                // here we are getting the URL of the image and keeping it in a string
                 final String image = dataSnapshot.child("image").getValue().toString();
                 String status = dataSnapshot.child("status").getValue().toString();
-                String thumb_image = dataSnapshot.child("thumb_image").getValue().toString();
+                final String thumb_image = dataSnapshot.child("thumb_image").getValue().toString();
 
-                // updating name , status and dp according to the database
+                // updating name , status  according to the database
                 mName.setText(name);
                 mStatus.setText(status);
-                if(!image.equals("default"))    // if image is available in database then update otherwise default_avatar sign will appear
-                 Picasso.get().load(image).into(mDisplayImage);
 
-               /* if(!image.equals("default")){
+                // method below will work if a user has posted its DP otherwise default avatar sign will be shown
+                if (!thumb_image.equals("default")) {
 
-                    mDisplayImage.setImageDrawable(Drawable);
-                }*/
+                    // ---------------- load image from offline feature and if error occur in that then load image from Database
+                    Picasso.get().load(thumb_image).networkPolicy(NetworkPolicy.OFFLINE)
+                            .placeholder(R.drawable.default_avatar).into(mDisplayImage, new Callback() {
+                        @Override
+                        public void onSuccess() {
 
-       /*if(!image.equals("default")) {
+                        }
 
-        //Picasso.with(SettingsActivity.this).load(image).placeholder(R.drawable.default_avatar).into(mDisplayImage);
+                        @Override
+                        public void onError(Exception e) {
 
-           Picasso.get().load(image).networkPolicy(NetworkPolicy.OFFLINE)
-                .placeholder(R.drawable.default_avatar).into(mDisplayImage, new Callback() {
-         @Override
-         public void onSuccess() {
+                            Picasso.get().load(thumb_image).placeholder(R.drawable.default_avatar).into(mDisplayImage);
 
-         }
+                        }
+                    });
 
-         @Override
-         public void onError() {
-
-             //Picasso.get().load(image).placeholder(R.drawable.default_avatar).into(mDisplayImage);
-
-         }
-        });
-
-       }*/
-
-
+                }
             }
 
             @Override

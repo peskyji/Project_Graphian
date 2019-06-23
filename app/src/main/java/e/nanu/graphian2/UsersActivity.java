@@ -20,6 +20,8 @@ import com.firebase.ui.database.FirebaseRecyclerOptions;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
 
 import de.hdodenhof.circleimageview.CircleImageView;
@@ -52,6 +54,8 @@ public class UsersActivity extends AppCompatActivity {
         // database reference from where data is to be retrived
         mUsersDatabase = FirebaseDatabase.getInstance().getReference().child("Users");
 
+        // this line is for offline support to load data even when not connected to the internet
+        mUsersDatabase.keepSynced(true);
         mLayoutManager = new LinearLayoutManager(this);
 
         // recyclerView
@@ -152,9 +156,29 @@ public class UsersActivity extends AppCompatActivity {
 
         public void setUserImage(String thumb_image, Context ctx){
 
-            CircleImageView userImageView = (CircleImageView) mView.findViewById(R.id.user_single_image);
-            Picasso.get().load(thumb_image).into(userImageView);
-            //Picasso.with(ctx).load(thumb_image).placeholder(R.drawable.default_avatar).into(userImageView);
+            final CircleImageView userImageView = (CircleImageView) mView.findViewById(R.id.user_single_image);
+           // Picasso.get().load(thumb_image).placeholder(R.drawable.default_avatar).into(userImageView);
+            if (!thumb_image.equals("default")) {
+
+                final String temp=thumb_image;
+
+                // ---------------- load image from offline feature and if error occur in that then load image from Database
+                Picasso.get().load(thumb_image).networkPolicy(NetworkPolicy.OFFLINE)
+                        .placeholder(R.drawable.default_avatar).into(userImageView, new Callback() {
+                    @Override
+                    public void onSuccess() {
+
+                    }
+
+                    @Override
+                    public void onError(Exception e) {
+
+                        Picasso.get().load(temp).placeholder(R.drawable.default_avatar).into(userImageView);
+
+                    }
+                });
+
+            }
 
         }
 

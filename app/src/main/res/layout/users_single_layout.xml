@@ -22,6 +22,9 @@
         android:layout_marginStart="20dp"
         android:layout_toEndOf="@+id/user_single_image"
         android:text="Display Name"
+        android:maxLines="1"
+        android:ellipsize="end"
+        android:textStyle="bold"
         android:textColor="@android:color/black"
         android:textSize="18sp" />
 
@@ -32,6 +35,8 @@
         android:layout_alignStart="@+id/user_single_name"
         android:layout_below="@+id/user_single_name"
         android:layout_marginTop="10dp"
+        android:maxLines="1"
+        android:ellipsize="end"
         android:text="User default Status" />
 
     <ImageView
@@ -43,5 +48,17 @@
         android:layout_toEndOf="@+id/user_single_name"
         android:visibility="invisible"
         app:srcCompat="@drawable/online_icon" />
+
+    <View
+        android:layout_width="200dp"
+        android:layout_height="0.1dp"
+        android:layout_alignBottom="@id/user_single_image"
+        android:layout_alignParentEnd="true"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="0dp"
+        android:layout_marginBottom="-6dp"
+        android:layout_toEndOf="@+id/user_single_image"
+        android:background="@color/deeppurple" />
 
 </RelativeLayout>

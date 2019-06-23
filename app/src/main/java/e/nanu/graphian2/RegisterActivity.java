@@ -167,7 +167,7 @@ public class RegisterActivity extends AppCompatActivity {
                             // to add complex data or more than 1 fields we use hash map
                             HashMap<String, String> userMap = new HashMap<>();
                             userMap.put("name", display_name);
-                            userMap.put("status", "Hi there I'm using Graphian");
+                            userMap.put("status", "Hi there I'm using GRAPHIAN");
                             userMap.put("image", "default");
                             userMap.put("thumb_image", "default");
                           //  userMap.put("device_token", device_token);
