@@ -70,12 +70,17 @@ public class ChatHomeActivity extends AppCompatActivity {
 
         } else {
 
-           // mUserRef.child("online").setValue("true");
+          //  mUserRef.child("online").setValue("true");
 
         }
 
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+       // mUserRef.child("online").setValue("false");
+    }
 
     private void sendToStart() {
 
