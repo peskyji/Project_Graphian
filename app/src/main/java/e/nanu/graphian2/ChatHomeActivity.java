@@ -68,11 +68,21 @@ public class ChatHomeActivity extends AppCompatActivity {
         if(currentUser == null){
 
             sendToStart();
-
+        }
+        else
+        {
+            mUserRef.child("online").setValue("true");
         }
 
     }
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        FirebaseUser currentUser = mAuth.getCurrentUser();
+         if(currentUser!=null)
+            mUserRef.child("online").setValue(ServerValue.TIMESTAMP);
+    }
 
     private void sendToStart() {
 

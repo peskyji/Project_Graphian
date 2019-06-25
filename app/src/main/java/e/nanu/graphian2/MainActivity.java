@@ -10,6 +10,7 @@ import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ServerValue;
 
 public class MainActivity extends AppCompatActivity {
 
@@ -52,10 +53,16 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
-        if(currentUser!=null)
-            mUserRef.child("online").setValue("false");
+       /* if(currentUser!=null)
+            mUserRef.child("online").setValue(ServerValue.TIMESTAMP);*/
     }
 
+    @Override
+    protected void onDestroy() {
+        super.onDestroy();
+        if(currentUser!=null)
+            mUserRef.child("online").setValue(ServerValue.TIMESTAMP);
+    }
 
     public void visitGeu(View v)
     {
