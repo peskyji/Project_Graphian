@@ -1,13 +1,12 @@
 <?xml version="1.0" encoding="utf-8"?>
 <ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
-    android:layout_height="match_parent" >
+    android:layout_height="match_parent"
+    >
 
 
     <LinearLayout
         xmlns:android="http://schemas.android.com/apk/res/android"
-        xmlns:app="http://schemas.android.com/apk/res-auto"
-        xmlns:tools="http://schemas.android.com/tools"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
 
@@ -20,13 +19,14 @@
         <RelativeLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorPrimaryDark"
+            android:background="#03A9F4"
             >
 
             <ImageView
-                android:layout_width="100dp"
-                android:layout_height="100dp"
-                android:layout_centerInParent="true"
+                android:layout_width="92dp"
+                android:layout_height="60dp"
+                android:layout_alignParentEnd="true"
+                android:layout_marginEnd="290dp"
                 android:src="@drawable/handcrop" />
         </RelativeLayout>
         <LinearLayout
@@ -35,27 +35,31 @@
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorPrimaryDark">
+            android:background="@drawable/bg1">
             <androidx.cardview.widget.CardView
                 android:foreground="?android:attr/selectableItemBackground"
                 android:clickable="true"
                 android:id="@+id/bankcardId"
                 android:layout_width="160dp"
                 android:layout_height="190dp"
-                android:layout_margin="10dp">
+                android:layout_margin="10dp"
+                >
                 <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical"
-                    android:gravity="center">
+                    android:gravity="center"
+
+                    android:background="@drawable/shape">
 
                     <ImageView
-                        android:layout_width="140dp"
-                        android:layout_height="140dp"
-                        android:background="@color/white"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:background="#0803A9F4"
                         android:onClick="visitGeu"
                         android:padding="10dp"
-                        android:src="@drawable/geu1" />
+                        android:src="@drawable/geu1"
+                        />
 
                     <View
                         android:layout_width="match_parent"
@@ -82,14 +86,16 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical"
-                    android:gravity="center">
+                    android:gravity="center"
+                    android:background="@drawable/shape">
+
                     <ImageView
-                        android:layout_width="140dp"
-                        android:layout_height="140dp"
-                        android:background="@color/white"
-                        android:src="@drawable/gehuhd"
+                        android:layout_width="100dp"
+                        android:layout_height="100dp"
+                        android:background="#0803A9F4"
+                        android:onClick="visitGehuDdn"
                         android:padding="10dp"
-                        android:onClick="visitGehuDdn"/>
+                        android:src="@drawable/gehuhd" />
 
                     <View
                         android:layout_width="match_parent"
@@ -114,7 +120,7 @@
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorPrimaryDark">
+            >
             <androidx.cardview.widget.CardView
                 android:foreground="?android:attr/selectableItemBackground"
                 android:clickable="true"
@@ -125,14 +131,16 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical"
-                    android:gravity="center">
+                    android:gravity="center"
+                    android:background="@drawable/shape">
+
                     <ImageView
                         android:layout_width="140dp"
-                        android:layout_height="140dp"
-                        android:background="@color/white"
-                        android:src="@drawable/cyborgbig"
+                        android:layout_height="100dp"
+                        android:background="#0803A9F4"
+                        android:onClick="visitErpGeu"
                         android:padding="10dp"
-                        android:onClick="visitErpGeu"/>
+                        android:src="@drawable/cyborgbig" />
 
                     <View
                         android:layout_width="match_parent"
@@ -160,15 +168,16 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:gravity="center"
-                    android:orientation="vertical">
+                    android:orientation="vertical"
+                    android:background="@drawable/shape">
 
                     <ImageView
                         android:layout_width="140dp"
-                        android:layout_height="140dp"
-                        android:background="#ffffff"
+                        android:layout_height="100dp"
+                        android:background="#0803A9F4"
                         android:padding="10dp"
                         android:src="@drawable/cyborgbig"
-                        android:onClick="visitErpGehu"/>
+                        android:onClick="visitErpGehu" />
 
                     <View
                         android:layout_width="match_parent"
@@ -194,7 +203,7 @@
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:background="@color/colorPrimaryDark">
+            >
             <androidx.cardview.widget.CardView
                 android:foreground="?android:attr/selectableItemBackground"
                 android:clickable="true"
@@ -206,11 +215,12 @@
                     android:layout_width="match_parent"
                     android:layout_height="match_parent"
                     android:orientation="vertical"
-                    android:gravity="center">
+                    android:gravity="center"
+                    android:background="@drawable/shape">
                     <ImageView
-                        android:layout_width="140dp"
-                        android:layout_height="140dp"
-                        android:background="@color/white"
+                        android:layout_width="120dp"
+                        android:layout_height="120dp"
+                        android:background="#0803A9F4"
                         android:src="@drawable/chat"
                         android:onClick="startChat"
                         android:padding="10dp"/>
