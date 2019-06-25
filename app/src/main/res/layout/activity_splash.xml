@@ -33,7 +33,7 @@
         android:paddingLeft="20dp"
         android:text="@string/app_name"
         android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-        android:textColor="#CD536DFE"
+        android:textColor="#AB7140F1"
         android:textSize="26sp"
         android:textStyle="bold|italic" />
 
