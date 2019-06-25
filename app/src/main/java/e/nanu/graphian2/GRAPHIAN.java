@@ -3,6 +3,7 @@ package e.nanu.graphian2;
 import android.app.Application;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -37,8 +38,9 @@ public class GRAPHIAN extends Application {
 
 
 
-        /*------------------------------------------------------------------------------------------------------
+        //-------------  if a user is online then we perform the following things like saving time for last seen --------
 
+        mAuth=FirebaseAuth.getInstance();
         if(mAuth.getCurrentUser() != null) {
 
             mUserDatabase = FirebaseDatabase.getInstance()
@@ -62,7 +64,7 @@ public class GRAPHIAN extends Application {
                 }
             });
 
-        }*/
+        }
 
 
     }

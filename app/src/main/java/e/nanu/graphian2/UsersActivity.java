@@ -89,7 +89,7 @@ public class UsersActivity extends AppCompatActivity {
             protected void onBindViewHolder(@NonNull UsersViewHolder holder, int position, @NonNull Users model) {
                 holder.setDisplayName(model.getName());
                 holder.setUserStatus(model.getStatus());
-                holder.setUserImage(model.getThumb_image(), getApplicationContext());
+                holder.setUserImage(model.getThumb_image());
 
                 final String user_id = getRef(position).getKey();
 
@@ -154,13 +154,13 @@ public class UsersActivity extends AppCompatActivity {
 
         }
 
-        public void setUserImage(String thumb_image, Context ctx){
+        public void setUserImage(final String thumb_image){
 
             final CircleImageView userImageView = (CircleImageView) mView.findViewById(R.id.user_single_image);
            // Picasso.get().load(thumb_image).placeholder(R.drawable.default_avatar).into(userImageView);
-            if (!thumb_image.equals("default")) {
+            if (!"default".equals(thumb_image)) {
 
-                final String temp=thumb_image;
+               // final String temp=thumb_image;
 
                 // ---------------- load image from offline feature and if error occur in that then load image from Database
                 Picasso.get().load(thumb_image).networkPolicy(NetworkPolicy.OFFLINE)
@@ -173,7 +173,7 @@ public class UsersActivity extends AppCompatActivity {
                     @Override
                     public void onError(Exception e) {
 
-                        Picasso.get().load(temp).placeholder(R.drawable.default_avatar).into(userImageView);
+                        Picasso.get().load(thumb_image).placeholder(R.drawable.default_avatar).into(userImageView);
 
                     }
                 });

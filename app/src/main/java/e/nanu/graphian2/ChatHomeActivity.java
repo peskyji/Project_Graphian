@@ -13,6 +13,8 @@ import android.widget.Toast;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ServerValue;
 
 public class ChatHomeActivity extends AppCompatActivity {
 
@@ -23,7 +25,6 @@ public class ChatHomeActivity extends AppCompatActivity {
     private ViewPager mViewPager;
 
     private SectionsPagerAdapter mSectionsPagerAdapter;
-
     private DatabaseReference mUserRef;
 
     private TabLayout mTabLayout;
@@ -32,18 +33,12 @@ public class ChatHomeActivity extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_chat_home);
         Toast.makeText(getApplicationContext(),"chathome activity",Toast.LENGTH_SHORT).show();
+
         mAuth = FirebaseAuth.getInstance();
 
         mToolbar = (Toolbar) findViewById(R.id.main_page_toolbar);
         setSupportActionBar(mToolbar);
         getSupportActionBar().setTitle("GRAPHIAN");
-
-        /*if (mAuth.getCurrentUser() != null) {
-
-
-            mUserRef = FirebaseDatabase.getInstance().getReference().child("Users").child(mAuth.getCurrentUser().getUid());
-
-        }*/
 
 
         //Tabs
@@ -55,6 +50,12 @@ public class ChatHomeActivity extends AppCompatActivity {
         mTabLayout = (TabLayout) findViewById(R.id.main_tabs);
         mTabLayout.setupWithViewPager(mViewPager);
 
+        if (mAuth.getCurrentUser() != null) {
+
+
+            mUserRef = FirebaseDatabase.getInstance().getReference().child("Users").child(mAuth.getCurrentUser().getUid());
+
+        }
 
 
     }
@@ -68,19 +69,10 @@ public class ChatHomeActivity extends AppCompatActivity {
 
             sendToStart();
 
-        } else {
-
-          //  mUserRef.child("online").setValue("true");
-
         }
 
     }
 
-    @Override
-    protected void onStop() {
-        super.onStop();
-       // mUserRef.child("online").setValue("false");
-    }
 
     private void sendToStart() {
 
@@ -105,7 +97,7 @@ public class ChatHomeActivity extends AppCompatActivity {
 
         if(item.getItemId() == R.id.main_logout_btn){
 
-           // mUserRef.child("online").setValue(ServerValue.TIMESTAMP);
+            mUserRef.child("online").setValue(ServerValue.TIMESTAMP);
 
             FirebaseAuth.getInstance().signOut();
             sendToStart();

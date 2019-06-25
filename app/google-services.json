@@ -1,0 +1,48 @@
+{
+  "project_info": {
+    "project_number": "64943688172",
+    "firebase_url": "https://graphian2.firebaseio.com",
+    "project_id": "graphian2",
+    "storage_bucket": "graphian2.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:64943688172:android:024f2e345500c022",
+        "android_client_info": {
+          "package_name": "e.nanu.graphian2"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "64943688172-s0h96a0lpbd56mhibi1980oa29ijc37n.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "e.nanu.graphian2",
+            "certificate_hash": "d7d989706022031618a8ab1352c3b65efeb10818"
+          }
+        },
+        {
+          "client_id": "64943688172-utiuo312rdch6v1ejb53p8ocrs46u5c1.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCYXZV4cia91sRTg_zOb4l1g2rQ-9ezGuQ"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "64943688172-utiuo312rdch6v1ejb53p8ocrs46u5c1.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
