@@ -354,5 +354,10 @@ public class ProfileActivity extends AppCompatActivity {
 
     }
 
-
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if(mCurrent_user.getUid()!=null)
+            mUsersDatabase.child("online").setValue("true");
+    }
 }

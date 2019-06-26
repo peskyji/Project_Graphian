@@ -116,8 +116,8 @@ public class UsersActivity extends AppCompatActivity {
     @Override
     protected void onStart() {
         super.onStart();
-
        firebaseRecyclerAdapter .startListening();
+
     }
 
     @Override

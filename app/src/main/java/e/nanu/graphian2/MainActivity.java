@@ -24,12 +24,12 @@ public class MainActivity extends AppCompatActivity {
         setContentView(R.layout.activity_main);
         mAuth=FirebaseAuth.getInstance();
 
-        if (mAuth.getCurrentUser() != null) {
+        /*if (mAuth.getCurrentUser() != null) {
 
 
             mUserRef = FirebaseDatabase.getInstance().getReference().child("Users").child(mAuth.getCurrentUser().getUid());
 
-        }
+        }*/
 
 
     }
@@ -40,11 +40,11 @@ public class MainActivity extends AppCompatActivity {
         // Check if user is signed in (non-null) and update UI accordingly.
         currentUser = mAuth.getCurrentUser();
 
-        if(currentUser != null){
+       /* if(currentUser != null){
 
             mUserRef.child("online").setValue("true");
 
-        }
+        }*/
 
        // updateUI(currentUser);
     }
@@ -57,12 +57,6 @@ public class MainActivity extends AppCompatActivity {
             mUserRef.child("online").setValue(ServerValue.TIMESTAMP);*/
     }
 
-    @Override
-    protected void onDestroy() {
-        super.onDestroy();
-        if(currentUser!=null)
-            mUserRef.child("online").setValue(ServerValue.TIMESTAMP);
-    }
 
     public void visitGeu(View v)
     {

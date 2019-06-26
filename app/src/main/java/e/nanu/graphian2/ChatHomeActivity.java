@@ -82,6 +82,7 @@ public class ChatHomeActivity extends AppCompatActivity {
         FirebaseUser currentUser = mAuth.getCurrentUser();
          if(currentUser!=null)
             mUserRef.child("online").setValue(ServerValue.TIMESTAMP);
+           // mUserRef.child("lastSeen").setValue(ServerValue.TIMESTAMP);
     }
 
     private void sendToStart() {
