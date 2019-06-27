@@ -14,8 +14,12 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ServerValue;
+import com.google.firebase.database.ValueEventListener;
 
 public class StatusActivity extends AppCompatActivity {
 
@@ -33,6 +37,7 @@ public class StatusActivity extends AppCompatActivity {
     //Progress
     private ProgressDialog mProgress;
 
+    private String onlineStatus;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -95,6 +100,42 @@ public class StatusActivity extends AppCompatActivity {
         });
 
 
+        mStatusDatabase.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
 
+                onlineStatus = dataSnapshot.child("online").getValue().toString();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+    }
+
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+
+        if(mCurrentUser.getUid() !=null)
+            mStatusDatabase.child("online").setValue("StatusActivity");
+    }
+
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        if(mCurrentUser.getUid() !=null)
+        {
+            if(onlineStatus != null)
+            {
+                if("StatusActivity".equals(onlineStatus))
+                    mStatusDatabase.child("online").setValue(ServerValue.TIMESTAMP);
+            }
+        }
     }
 }

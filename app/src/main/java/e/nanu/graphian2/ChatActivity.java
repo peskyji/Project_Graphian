@@ -84,7 +84,8 @@ public class ChatActivity extends AppCompatActivity {
 
     private String mLastKey = "";
     private String mPrevKey = "";
-
+    private String onlineStatusUser2;
+    private String onlineStatusCurrentUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -146,11 +147,11 @@ public class ChatActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                String online = dataSnapshot.child("online").getValue().toString();
+                onlineStatusUser2= dataSnapshot.child("online").getValue().toString();
                 String image = dataSnapshot.child("image").getValue().toString();
 
 
-                if("true".equals(online)) {
+                if(onlineStatusUser2.endsWith("Activity")) {
 
                     mLastSeenView.setText("Online");
 
@@ -160,7 +161,7 @@ public class ChatActivity extends AppCompatActivity {
                     try
                     {
 
-                        long lastTime = Long.parseLong(online);
+                        long lastTime = Long.parseLong(onlineStatusUser2);
                         String lastSeenTime = getTimeAgo.getTimeAgo(lastTime, getApplicationContext());
                         mLastSeenView.setText(lastSeenTime);
 
@@ -179,6 +180,7 @@ public class ChatActivity extends AppCompatActivity {
             public void onCancelled(DatabaseError databaseError) {
 
             }
+
         });
 
 
@@ -260,6 +262,24 @@ public class ChatActivity extends AppCompatActivity {
 
             }
         });
+
+
+        //---------------------- retrieving current user online status-------------------------------------
+
+        mRootRef.child("Users").child(mCurrentUserId).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                onlineStatusCurrentUser = dataSnapshot.child("online").getValue().toString();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+        //-----------------------------------------------------------------------------------------------
+
 
 
     }
@@ -543,12 +563,28 @@ public class ChatActivity extends AppCompatActivity {
         // Check if user is signed in (non-null) and update UI accordingly.
 
         if(mCurrentUserId != null)
-            FirebaseDatabase.getInstance().getReference().child("Users").child(mAuth.getCurrentUser().getUid()).child("online").setValue("true");
+            FirebaseDatabase.getInstance().getReference()
+                    .child("Users").child(mAuth.getCurrentUser().getUid())
+                    .child("online").setValue("ChatActivity");
 
 
     }
 
 
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if(mCurrentUserId != null)
+        {
+            if(onlineStatusCurrentUser != null)
+            {
+                if("ChatActivity".equals(onlineStatusCurrentUser))
+                    FirebaseDatabase.getInstance().getReference()
+                            .child("Users").child(mAuth.getCurrentUser().getUid())
+                            .child("online").setValue(ServerValue.TIMESTAMP);
+            }
+        }
+    }
 }
 
 // dummy comment

@@ -17,9 +17,14 @@ import android.widget.TextView;
 
 import com.firebase.ui.database.FirebaseRecyclerAdapter;
 import com.firebase.ui.database.FirebaseRecyclerOptions;
+import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
+import com.google.firebase.database.ServerValue;
+import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Callback;
 import com.squareup.picasso.NetworkPolicy;
 import com.squareup.picasso.Picasso;
@@ -33,10 +38,13 @@ public class UsersActivity extends AppCompatActivity {
     private RecyclerView mUsersList;
 
     private DatabaseReference mUsersDatabase;
+    private DatabaseReference mCurrentUserDatabase;
 
     private LinearLayoutManager mLayoutManager;
 
     private FirebaseRecyclerAdapter firebaseRecyclerAdapter;
+
+    private String onlineStatus;
 
 
     @Override
@@ -50,9 +58,10 @@ public class UsersActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("All Users");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-
         // database reference from where data is to be retrived
         mUsersDatabase = FirebaseDatabase.getInstance().getReference().child("Users");
+
+        mCurrentUserDatabase =mUsersDatabase.child(FirebaseAuth.getInstance().getCurrentUser().getUid());
 
         // this line is for offline support to load data even when not connected to the internet
         mUsersDatabase.keepSynced(true);
@@ -62,6 +71,7 @@ public class UsersActivity extends AppCompatActivity {
         mUsersList = (RecyclerView) findViewById(R.id.users_list);
         mUsersList.setHasFixedSize(true);
         mUsersList.setLayoutManager(mLayoutManager);
+
 
         Query query=mUsersDatabase;
         FirebaseRecyclerOptions<Users> options =
@@ -109,6 +119,21 @@ public class UsersActivity extends AppCompatActivity {
 
         mUsersList.setAdapter(firebaseRecyclerAdapter);
 
+        //----------------------------- retrieving current user online status----------------------------------
+        mCurrentUserDatabase.addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                onlineStatus = dataSnapshot.child("online").getValue().toString();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+        //-----------------------------------------------------------------------------------------------------
+
     }
 
 
@@ -118,12 +143,28 @@ public class UsersActivity extends AppCompatActivity {
         super.onStart();
        firebaseRecyclerAdapter .startListening();
 
+        if(FirebaseAuth.getInstance().getCurrentUser() != null)
+            FirebaseDatabase.getInstance().getReference()
+                    .child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                    .child("online").setValue("UsersActivity");
+
     }
 
     @Override
     protected void onStop() {
         super.onStop();
         firebaseRecyclerAdapter.stopListening();
+
+        if(FirebaseAuth.getInstance().getCurrentUser() != null)
+        {
+            if(onlineStatus != null)
+            {
+                if("UsersActivity".equals(onlineStatus))
+                    FirebaseDatabase.getInstance().getReference()
+                            .child("Users").child(FirebaseAuth.getInstance().getCurrentUser().getUid())
+                            .child("online").setValue(ServerValue.TIMESTAMP);
+            }
+        }
     }
 
 

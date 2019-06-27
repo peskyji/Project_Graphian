@@ -15,7 +15,8 @@
         android:layout_alignParentTop="true"
         android:adjustViewBounds="true"
         android:scaleType="centerCrop"
-        app:srcCompat="@drawable/default_avatar" />
+        app:srcCompat="@drawable/default_avatar"
+        android:onClick="ShowFullImage"/>
 
 
 <ScrollView

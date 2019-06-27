@@ -23,6 +23,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
@@ -66,7 +67,8 @@ public class SettingsActivity extends AppCompatActivity {
     public Uri imageUri;
     private ProgressDialog mProgressDialog;
     String downloadurl=null;
-
+    String profileImagePath;
+    private  String onlineStatus;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,12 +82,12 @@ public class SettingsActivity extends AppCompatActivity {
         mStatusBtn = (Button) findViewById(R.id.settings_status_btn);
         mImageBtn = (Button) findViewById(R.id.settings_image_btn);
 
+
         mImageStorage = FirebaseStorage.getInstance().getReference();
 
         mCurrentUser = FirebaseAuth.getInstance().getCurrentUser();
 
         String current_uid = mCurrentUser.getUid();
-
 
         mUserDatabase = FirebaseDatabase.getInstance().getReference().child("Users").child(current_uid);
 
@@ -100,13 +102,19 @@ public class SettingsActivity extends AppCompatActivity {
                 String name = dataSnapshot.child("name").getValue().toString();
 
                 // here we are getting the URL of the image and keeping it in a string
-                final String image = dataSnapshot.child("image").getValue().toString();
+                 String image = dataSnapshot.child("image").getValue().toString();
                 String status = dataSnapshot.child("status").getValue().toString();
                 final String thumb_image = dataSnapshot.child("thumb_image").getValue().toString();
+
+                onlineStatus = dataSnapshot.child("online").getValue().toString();
 
                 // updating name , status  according to the database
                 mName.setText(name);
                 mStatus.setText(status);
+
+                //---------------  storing image path to send to ImageViewingActivity ---------------------
+                profileImagePath = image;
+                //------------------------------------------------------------------------------------
 
                 // method below will work if a user has posted its DP otherwise default avatar sign will be shown
                 if (!thumb_image.equals("default")) {
@@ -135,6 +143,7 @@ public class SettingsActivity extends AppCompatActivity {
 
             }
         });
+
 
 
         // on clicking change status button we will send current status to Status Activity
@@ -183,12 +192,27 @@ public class SettingsActivity extends AppCompatActivity {
         String currentUserId=FirebaseAuth.getInstance().getCurrentUser().getUid();
         if(currentUserId != null)
         {
-            FirebaseDatabase.getInstance().getReference().child("Users").child(currentUserId).child("online").setValue("true");
+            mUserDatabase.child("online").setValue("SettingsActivity");
         }
 
 
     }
 
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+
+        if(mCurrentUser!=null)
+        {
+            if(onlineStatus!=null)
+            {
+                if("SettingsActivity".equals(onlineStatus))
+                    mUserDatabase.child("online").setValue(ServerValue.TIMESTAMP);
+            }
+        }
+
+    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -324,6 +348,24 @@ public class SettingsActivity extends AppCompatActivity {
         }
 
     }
+
+
+    //-----------  on clicking profile icon show full profile picture ------------------------------------
+
+    public void ShowFullImage(View v)
+        {
+            if(profileImagePath!=null)
+            {
+                Intent imageIntent = new Intent(SettingsActivity.this, ImageViewingActivity.class);
+                imageIntent.putExtra("imageKaPath",profileImagePath);
+                startActivity(imageIntent);
+            }
+
+        }
+
+    //----------------------------------------------------------------------------------------------------------
+
+
 
 }
 

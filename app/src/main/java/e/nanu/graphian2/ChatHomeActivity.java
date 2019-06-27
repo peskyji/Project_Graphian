@@ -12,9 +12,12 @@ import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.google.firebase.auth.FirebaseUser;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ServerValue;
+import com.google.firebase.database.ValueEventListener;
 
 public class ChatHomeActivity extends AppCompatActivity {
 
@@ -28,6 +31,10 @@ public class ChatHomeActivity extends AppCompatActivity {
     private DatabaseReference mUserRef;
 
     private TabLayout mTabLayout;
+
+    String onlineStatus;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -55,6 +62,21 @@ public class ChatHomeActivity extends AppCompatActivity {
 
             mUserRef = FirebaseDatabase.getInstance().getReference().child("Users").child(mAuth.getCurrentUser().getUid());
 
+            mUserRef.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(DataSnapshot dataSnapshot) {
+
+                    // retrieving data from firebase database
+                    onlineStatus = dataSnapshot.child("online").getValue().toString();
+
+                }
+
+                @Override
+                public void onCancelled(DatabaseError databaseError) {
+
+                }
+            });
+
         }
 
 
@@ -71,7 +93,8 @@ public class ChatHomeActivity extends AppCompatActivity {
         }
         else
         {
-            mUserRef.child("online").setValue("true");
+            mUserRef.child("online").setValue("ChatHomeActivity");
+
         }
 
     }
@@ -81,8 +104,14 @@ public class ChatHomeActivity extends AppCompatActivity {
         super.onStop();
         FirebaseUser currentUser = mAuth.getCurrentUser();
          if(currentUser!=null)
-            mUserRef.child("online").setValue(ServerValue.TIMESTAMP);
-           // mUserRef.child("lastSeen").setValue(ServerValue.TIMESTAMP);
+         {
+             if(onlineStatus!=null)
+             {
+                 if("ChatHomeActivity".equals(onlineStatus))
+                     mUserRef.child("online").setValue(ServerValue.TIMESTAMP);
+             }
+         }
+
     }
 
     private void sendToStart() {
@@ -118,6 +147,9 @@ public class ChatHomeActivity extends AppCompatActivity {
         if(item.getItemId() == R.id.main_settings_btn){
 
             Intent settingsIntent = new Intent(ChatHomeActivity.this, SettingsActivity.class);
+
+           // mUserRef.child("online").setValue("Intent");
+
             startActivity(settingsIntent);
 
         }
@@ -126,6 +158,7 @@ public class ChatHomeActivity extends AppCompatActivity {
         if(item.getItemId() == R.id.main_all_btn){
 
             Intent settingsIntent = new Intent(ChatHomeActivity.this, UsersActivity.class);
+           // mUserRef.child("online").setValue("Intent");
             startActivity(settingsIntent);
 
         }
