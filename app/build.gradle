@@ -39,6 +39,7 @@ dependencies {
     implementation 'com.firebaseui:firebase-ui-database:4.3.1'
     implementation 'com.google.firebase:firebase-messaging:19.0.0'
 
+
     testImplementation 'junit:junit:4.12'
 
     implementation 'de.hdodenhof:circleimageview:3.0.0'
@@ -47,6 +48,7 @@ dependencies {
     implementation 'com.squareup.okhttp:okhttp:2.5.0'
     implementation 'com.squareup.okio:okio:2.2.2'
     implementation 'id.zelory:compressor:2.1.0'
+    implementation 'com.makeramen:roundedimageview:2.3.0'
     implementation 'androidx.recyclerview:recyclerview:1.0.0'
 
 

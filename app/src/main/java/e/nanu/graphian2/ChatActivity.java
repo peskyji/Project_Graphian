@@ -26,6 +26,7 @@ import com.google.android.gms.tasks.OnFailureListener;
 import com.google.android.gms.tasks.OnSuccessListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.auth.FirebaseUser;
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -37,6 +38,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -77,13 +79,13 @@ public class ChatActivity extends AppCompatActivity {
     // Storage Firebase
     private StorageReference mImageStorage;
 
-
     //New Solution
     private int itemPos = 0;
 
     private String mLastKey = "";
     private String mPrevKey = "";
-
+    private String onlineStatusUser2;
+    private String onlineStatusCurrentUser;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -145,11 +147,13 @@ public class ChatActivity extends AppCompatActivity {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                String online = dataSnapshot.child("online").getValue().toString();
+                onlineStatusUser2= dataSnapshot.child("online").getValue().toString();
                 String image = dataSnapshot.child("image").getValue().toString();
+                String thumb_image = dataSnapshot.child("thumb_image").getValue().toString();
 
-
-                if("true".equals(online)) {
+                if(thumb_image!=null)
+                 Picasso.get().load(thumb_image).into(mProfileImage);
+                if(onlineStatusUser2.endsWith("Activity")) {
 
                     mLastSeenView.setText("Online");
 
@@ -159,7 +163,7 @@ public class ChatActivity extends AppCompatActivity {
                     try
                     {
 
-                        long lastTime = Long.parseLong(online);
+                        long lastTime = Long.parseLong(onlineStatusUser2);
                         String lastSeenTime = getTimeAgo.getTimeAgo(lastTime, getApplicationContext());
                         mLastSeenView.setText(lastSeenTime);
 
@@ -178,8 +182,11 @@ public class ChatActivity extends AppCompatActivity {
             public void onCancelled(DatabaseError databaseError) {
 
             }
+
         });
 
+       /* if(thumb_image!=null)
+            Picasso.get().load(thumb_image).into(mProfileImage);*/
 
         mRootRef.child("Chat").child(mCurrentUserId).addValueEventListener(new ValueEventListener() {
             @Override
@@ -259,6 +266,24 @@ public class ChatActivity extends AppCompatActivity {
 
             }
         });
+
+
+        //---------------------- retrieving current user online status-------------------------------------
+
+        mRootRef.child("Users").child(mCurrentUserId).addValueEventListener(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                onlineStatusCurrentUser = dataSnapshot.child("online").getValue().toString();
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+
+        //-----------------------------------------------------------------------------------------------
+
 
 
     }
@@ -535,5 +560,35 @@ public class ChatActivity extends AppCompatActivity {
         }
 
     }
+
+
+    public void onStart() {
+        super.onStart();
+        // Check if user is signed in (non-null) and update UI accordingly.
+
+        if(mCurrentUserId != null)
+            FirebaseDatabase.getInstance().getReference()
+                    .child("Users").child(mAuth.getCurrentUser().getUid())
+                    .child("online").setValue("ChatActivity");
+
+
+    }
+
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if(mCurrentUserId != null)
+        {
+            if(onlineStatusCurrentUser != null)
+            {
+                if("ChatActivity".equals(onlineStatusCurrentUser))
+                    FirebaseDatabase.getInstance().getReference()
+                            .child("Users").child(mAuth.getCurrentUser().getUid())
+                            .child("online").setValue(ServerValue.TIMESTAMP);
+            }
+        }
+    }
 }
 
+// dummy comment

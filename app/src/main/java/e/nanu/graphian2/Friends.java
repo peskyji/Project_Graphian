@@ -1,6 +1,7 @@
 package e.nanu.graphian2;
 
-public class Friends {
+public class
+Friends {
 
     public String date;
 

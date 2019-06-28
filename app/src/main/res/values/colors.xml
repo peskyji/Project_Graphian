@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="colorPrimary">#03A9F4</color>
-    <color name="colorPrimaryDark">#03A9F4</color>
+    <color name="colorPrimary">#4169e1</color>
+    <color name="colorPrimaryDark">#4169e1</color>
     <color name="backgroundcolor">#fcfcfc</color>
     <color name="lightgray">#ededed</color>
     <color name="deeppurple">#7c4dff</color>
@@ -15,6 +15,6 @@
     <color name="black_overlay">#66000000</color>
     <color name="bgblue">#0147FA</color>
     <color name="white">#ffffff</color>
-    <color name="cpd">#0BB5FF</color>
-    <color name="maincolor">#03A9F4</color>
+    <color name="cpd">#03A9F4</color>
+    <color name="black">#000000</color>
 </resources>

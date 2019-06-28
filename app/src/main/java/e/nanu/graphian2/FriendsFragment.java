@@ -231,7 +231,7 @@ public class FriendsFragment extends Fragment {
 
             ImageView userOnlineView = (ImageView) mView.findViewById(R.id.user_single_online_icon);
 
-            if(online_status.equals("true")){
+            if(online_status.endsWith("Activity")){
 
                 userOnlineView.setVisibility(View.VISIBLE);
 

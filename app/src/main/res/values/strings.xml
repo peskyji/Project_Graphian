@@ -1,9 +1,9 @@
 <resources>
     <string name="app_name">GRAPHIAN</string>
 
-    <string name="geuDesc">VISIT GEU WEBSITE</string>
+    <string name="geuDesc">VISIT GEU \nWEBSITE</string>
 
-    <string name="gehuDesc">VISIT GEHU WEBSITE</string>
+    <string name="gehuDesc">VISIT GEHU\n WEBSITE</string>
 
     <string name="corner">STUDENT CORNER</string>
 

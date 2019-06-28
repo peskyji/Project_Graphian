@@ -1,8 +1,10 @@
 package e.nanu.graphian2;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.app.ProgressDialog;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.Button;
@@ -17,6 +19,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ServerValue;
 import com.google.firebase.database.ValueEventListener;
 import com.squareup.picasso.Picasso;
 
@@ -44,6 +47,8 @@ public class ProfileActivity extends AppCompatActivity {
     private FirebaseUser mCurrent_user;
 
     private String mCurrent_state;
+    private String profileImagePath;
+    private String onlineStatus;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -90,6 +95,9 @@ public class ProfileActivity extends AppCompatActivity {
                 String status = dataSnapshot.child("status").getValue().toString();
                 String image = dataSnapshot.child("image").getValue().toString();
 
+                //----------------------  storing image url for ImageViewingActivity -------------------------------------
+                profileImagePath=image;
+               // -------------------------------------------------------------------------------------------------
                 mProfileName.setText(display_name);
                 mProfileStatus.setText(status);
 
@@ -352,7 +360,62 @@ public class ProfileActivity extends AppCompatActivity {
         });
 
 
+
+        //------------------------  retrieving cureent user's online status -----------------------------------------
+
+
+            mRootRef.child("Users").child(mCurrent_user.getUid()).addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    onlineStatus = dataSnapshot.child("online").getValue().toString();
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+
+        //----------------------------------------------------------------------------------------------------
+    }
+
+    @Override
+    protected void onStart() {
+        super.onStart();
+        if(mCurrent_user.getUid()!=null)
+        {
+            mRootRef.child("Users").child(mCurrent_user.getUid()).child("online").setValue("ProfileActivity");
+        }
     }
 
 
+
+    @Override
+    protected void onStop() {
+        super.onStop();
+        if(mCurrent_user.getUid() != null){
+
+            if(onlineStatus != null)
+            {
+                if("ProfileActivity".equals(onlineStatus))
+                    mRootRef.child("Users").child(mCurrent_user.getUid()).child("online").setValue(ServerValue.TIMESTAMP);
+            }
+        }
+    }
+
+
+    //-----------  on clicking profile icon show full profile picture ------------------------------------
+
+    public void ShowFullImage(View v)
+    {
+        if(profileImagePath!=null)
+        {
+            Intent imageIntent = new Intent(ProfileActivity.this, ImageViewingActivity.class);
+            imageIntent.putExtra("imageKaPath",profileImagePath);
+            startActivity(imageIntent);
+        }
+
+    }
+
+    //----------------------------------------------------------------------------------------------------------
 }

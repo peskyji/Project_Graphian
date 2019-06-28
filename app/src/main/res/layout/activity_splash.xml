@@ -6,7 +6,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     tools:context=".SplashActivity"
-    android:background="@drawable/bg2">
+    android:background="#18c7fc">
 
     <ImageView
         android:id="@+id/imageview"
@@ -24,17 +24,14 @@
 
     <TextView
         android:id="@+id/appname"
-        android:layout_width="179dp"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_alignBottom="@id/tvMid"
         android:layout_centerHorizontal="true"
-        android:layout_marginBottom="-81dp"
-        android:fontFamily="@font/architects_daughter"
-        android:paddingLeft="20dp"
+        android:layout_marginBottom="-45dp"
         android:text="@string/app_name"
-        android:textAppearance="@style/TextAppearance.AppCompat.Display1"
-        android:textColor="#AB7140F1"
+        android:textColor="@color/green"
         android:textSize="26sp"
-        android:textStyle="bold|italic" />
+        android:textStyle="bold"/>
 
 </RelativeLayout>

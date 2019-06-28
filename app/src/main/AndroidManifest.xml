@@ -15,8 +15,10 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme"
         android:usesCleartextTraffic="true">
-        <activity android:name=".ChatActivity"
-            android:parentActivityName=".ChatHomeActivity"></activity>
+        <activity android:name=".ImageViewingActivity"></activity>
+        <activity
+            android:name=".ChatActivity"
+            android:parentActivityName=".ChatHomeActivity" />
         <activity android:name=".ProfileActivity" />
         <activity
             android:name=".UsersActivity"
@@ -24,8 +26,12 @@
         <activity
             android:name=".StatusActivity"
             android:parentActivityName=".SettingsActivity" />
-        <activity android:name=".SettingsActivity" />
-        <activity android:name=".ChatHomeActivity" />
+        <activity
+            android:name=".SettingsActivity"
+            android:parentActivityName=".MainActivity" />
+        <activity
+            android:name=".ChatHomeActivity"
+            android:parentActivityName=".MainActivity" />
         <activity android:name=".LoginActivity" />
         <activity
             android:name=".RegisterActivity"
@@ -51,9 +57,6 @@
                 <action android:name="com.google.firebase.MESSAGING_EVENT" />
             </intent-filter>
         </service>
-        <meta-data
-            android:name="preloaded_fonts"
-            android:resource="@array/preloaded_fonts" />
     </application>
 
 </manifest>

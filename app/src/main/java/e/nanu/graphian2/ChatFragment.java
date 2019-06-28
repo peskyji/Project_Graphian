@@ -126,7 +126,8 @@ public class ChatFragment  extends Fragment {
                     public void onChildAdded(DataSnapshot dataSnapshot, String s) {
 
                         String data = dataSnapshot.child("message").getValue().toString();
-                        convViewHolder.setMessage(data, conv.isSeen());
+                        String dataType=dataSnapshot.child("type").getValue().toString();
+                        convViewHolder.setMessage(data, conv.isSeen(),dataType);
 
                     }
 
@@ -199,6 +200,13 @@ public class ChatFragment  extends Fragment {
         };
 
         mConvList.setAdapter(firebaseConvAdapter);
+        firebaseConvAdapter.startListening();
+
+    }
+
+    @Override
+    public void onStop() {
+        super.onStop();
 
     }
 
@@ -213,10 +221,17 @@ public class ChatFragment  extends Fragment {
 
         }
 
-        public void setMessage(String message, boolean isSeen){
+        public void setMessage(String message, boolean isSeen, String dataType){
 
             TextView userStatusView = (TextView) mView.findViewById(R.id.user_single_status);
-            userStatusView.setText(message);
+            ImageView cameraIcon = (ImageView) mView.findViewById(R.id.cameraImage);
+            if("image".equals(dataType))
+            {
+                cameraIcon.setVisibility(View.VISIBLE);
+                userStatusView.setText("Photo");
+            }
+            else
+                userStatusView.setText(message);
 
             if(!isSeen){
                 userStatusView.setTypeface(userStatusView.getTypeface(), Typeface.BOLD);
@@ -244,7 +259,7 @@ public class ChatFragment  extends Fragment {
 
             ImageView userOnlineView = (ImageView) mView.findViewById(R.id.user_single_online_icon);
 
-            if(online_status.equals("true")){
+            if(online_status.endsWith("Activity")){
 
                 userOnlineView.setVisibility(View.VISIBLE);
 

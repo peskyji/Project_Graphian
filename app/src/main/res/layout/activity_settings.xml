@@ -4,7 +4,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@drawable/bg2"
+    android:background="@color/colorPrimary"
     tools:context=".SettingsActivity">
 
     <de.hdodenhof.circleimageview.CircleImageView
@@ -17,7 +17,9 @@
         android:layout_centerHorizontal="true"
         android:layout_marginTop="30dp"
         app:civ_border_width="2dp"
-        app:civ_border_color="#FF000000"/>
+        app:civ_border_color="#FF000000"
+        android:clickable="true"
+        android:onClick="ShowFullImage"/>
 
     <TextView
         android:id="@+id/settings_name"
