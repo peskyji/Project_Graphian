@@ -43,6 +43,7 @@ public class LoginActivity extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         Toast.makeText(getApplicationContext(),"login",Toast.LENGTH_SHORT).show();
 
+        final String intentMsg = getIntent().getStringExtra("callFromMain");
 
         mAuth = FirebaseAuth.getInstance();
 
@@ -75,7 +76,7 @@ public class LoginActivity extends AppCompatActivity {
                     mLoginProgress.setCanceledOnTouchOutside(false);
                     mLoginProgress.show();
 
-                    loginUser(email, password);
+                    loginUser(email, password,intentMsg);
 
                 }
 
@@ -87,50 +88,7 @@ public class LoginActivity extends AppCompatActivity {
 
 
 
-    private void loginUser(String email, String password) {
-
-
-       /* mAuth.signInWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-            @Override
-            public void onComplete(@NonNull Task<AuthResult> task) {
-
-                if(task.isSuccessful()){
-
-                    mLoginProgress.dismiss();
-
-                    String current_user_id = mAuth.getCurrentUser().getUid();
-                    String deviceToken = FirebaseInstanceId.getInstance().getToken();
-
-                    mUserDatabase.child(current_user_id).child("device_token").setValue(deviceToken).addOnSuccessListener(new OnSuccessListener<Void>() {
-                        @Override
-                        public void onSuccess(Void aVoid) {
-
-                            Intent mainIntent = new Intent(LoginActivity.this, MainActivity.class);
-                            mainIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                            startActivity(mainIntent);
-                            finish();
-
-
-                        }
-                    });
-
-
-
-
-                } else {
-
-                    mLoginProgress.hide();
-
-                    String task_result = task.getException().getMessage().toString();
-
-                    Toast.makeText(LoginActivity.this, "Error : " + task_result, Toast.LENGTH_LONG).show();
-
-                }
-
-            }
-        });*/
-
-
+    private void loginUser(String email, String password, final String intentMsg) {
 
         mAuth.signInWithEmailAndPassword(email, password)
                 .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
@@ -139,11 +97,25 @@ public class LoginActivity extends AppCompatActivity {
                         if (task.isSuccessful()) {
                             // Sign in success, update UI with the signed-in user's information
                            // Log.d(TAG, "signInWithEmail:success");
+                            mLoginProgress.dismiss();
                             FirebaseUser user = mAuth.getCurrentUser();
-                            Intent mainIntent = new Intent(LoginActivity.this, ChatHomeActivity.class);
 
-                            startActivity(mainIntent);
-                            finish();
+                            if("callFromMain".equals(intentMsg))
+                            {
+                                Intent mainIntent = new Intent(LoginActivity.this, MainActivity.class);
+                                //mainIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                startActivity(mainIntent);
+                                finish();
+                            }
+
+                            else
+                            {
+
+                                Intent mainIntent = new Intent(LoginActivity.this, ChatHomeActivity.class);
+                                //mainIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                startActivity(mainIntent);
+                                finish();
+                            }
                         } else {
                             mLoginProgress.hide();
                             // If sign in fails, display a message to the user.

@@ -38,6 +38,7 @@ import com.google.firebase.database.ValueEventListener;
 import com.google.firebase.storage.FirebaseStorage;
 import com.google.firebase.storage.StorageReference;
 import com.google.firebase.storage.UploadTask;
+import com.squareup.picasso.Picasso;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -77,7 +78,6 @@ public class ChatActivity extends AppCompatActivity {
 
     // Storage Firebase
     private StorageReference mImageStorage;
-
 
     //New Solution
     private int itemPos = 0;
@@ -149,8 +149,10 @@ public class ChatActivity extends AppCompatActivity {
 
                 onlineStatusUser2= dataSnapshot.child("online").getValue().toString();
                 String image = dataSnapshot.child("image").getValue().toString();
+                String thumb_image = dataSnapshot.child("thumb_image").getValue().toString();
 
-
+                if(thumb_image!=null)
+                 Picasso.get().load(thumb_image).into(mProfileImage);
                 if(onlineStatusUser2.endsWith("Activity")) {
 
                     mLastSeenView.setText("Online");
@@ -183,6 +185,8 @@ public class ChatActivity extends AppCompatActivity {
 
         });
 
+       /* if(thumb_image!=null)
+            Picasso.get().load(thumb_image).into(mProfileImage);*/
 
         mRootRef.child("Chat").child(mCurrentUserId).addValueEventListener(new ValueEventListener() {
             @Override

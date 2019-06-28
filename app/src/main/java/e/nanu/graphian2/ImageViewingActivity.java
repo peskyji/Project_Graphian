@@ -6,7 +6,9 @@ import androidx.appcompat.app.AppCompatActivity;
 import android.app.ProgressDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import com.google.firebase.auth.FirebaseAuth;
@@ -38,7 +40,14 @@ public class ImageViewingActivity extends AppCompatActivity {
         ImageView showImage=(ImageView) findViewById(R.id.showImage);
         Intent intent=getIntent();
         String imageUrl=intent.getStringExtra("imageKaPath");
-        Toast.makeText(getApplicationContext(),"wait while image is being loaded",Toast.LENGTH_SHORT);
+
+        Toast.makeText(getApplicationContext(),"wait while image is being loaded",Toast.LENGTH_SHORT).show();
+        /*View view = toast.getView();
+        view.setBackgroundResource(R.color.white);
+        TextView text = (TextView) view.findViewById(android.R.id.message);
+        text.setTextColor(getResources().getColor(R.color.black));
+        toast.show();*/
+
         Picasso.get().load(imageUrl).into(showImage);
         mUserDatabase.keepSynced(true);
 

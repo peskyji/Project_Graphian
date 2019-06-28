@@ -52,7 +52,7 @@ public class RegisterActivity extends AppCompatActivity {
         getSupportActionBar().setTitle("Create Account");
         getSupportActionBar().setDisplayHomeAsUpEnabled(true);
 
-
+        final String intentMsg = getIntent().getStringExtra("callFromMain");
         mRegProgress = new ProgressDialog(this);
 
 
@@ -85,7 +85,7 @@ public class RegisterActivity extends AppCompatActivity {
                     mRegProgress.setCanceledOnTouchOutside(false);
                     mRegProgress.show();
 
-                    register_user(display_name, email, password);
+                    register_user(display_name, email, password,intentMsg);
 
                 }
 
@@ -96,7 +96,7 @@ public class RegisterActivity extends AppCompatActivity {
 
     }
 
-    private void register_user(final String display_name, String email, String password) {
+    private void register_user(final String display_name, String email, String password, final String intentMsg) {
 
         /*mAuth.createUserWithEmailAndPassword(email, password).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
             @Override
@@ -179,10 +179,22 @@ public class RegisterActivity extends AppCompatActivity {
 
                                         mRegProgress.dismiss();
 
-                                        Intent mainIntent = new Intent(RegisterActivity.this, ChatHomeActivity.class);
-                                        //mainIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-                                        startActivity(mainIntent);
-                                        finish();
+                                        if("callFromMain".equals(intentMsg))
+                                        {
+                                            Intent mainIntent = new Intent(RegisterActivity.this, MainActivity.class);
+                                            //mainIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                            startActivity(mainIntent);
+                                            finish();
+                                        }
+
+                                        else
+                                        {
+
+                                            Intent mainIntent = new Intent(RegisterActivity.this, ChatHomeActivity.class);
+                                            //mainIntent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                                            startActivity(mainIntent);
+                                            finish();
+                                        }
 
                                     }
 
