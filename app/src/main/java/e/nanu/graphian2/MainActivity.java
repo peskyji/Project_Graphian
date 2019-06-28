@@ -104,15 +104,19 @@ public class MainActivity extends AppCompatActivity {
         else
         {
             DisplayName.setText("Log In");
+            status.setVisibility(View.INVISIBLE);
             dp.setImageDrawable(getResources().getDrawable(R.drawable.default_avatar));
         }
 
         dp.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent intent = new Intent(MainActivity.this,StartActivity.class);
-                intent.putExtra("callFromMain","callFromMain");
-                startActivity(intent);
+               if(currentUser == null)
+               {
+                   Intent intent = new Intent(MainActivity.this,StartActivity.class);
+                   intent.putExtra("callFromMain","callFromMain");
+                   startActivity(intent);
+               }
 
             }
         });
